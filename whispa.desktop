@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=Whispa
+GenericName=Voice to Text
+Comment=Voice-to-text transcription using OpenAI Whisper (Shift+Ctrl+R)
+Exec=/usr/local/bin/whispa --minimized
+Icon=audio-input-microphone
+Terminal=false
+Type=Application
+Categories=Utility;AudioVideo;Accessibility;
+Keywords=voice;recording;transcription;whisper;speech;
+StartupNotify=true
+X-GNOME-Autostart-enabled=true 

@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Whispa
-Comment=Voice-to-text using OpenAI Whisper
-Exec=/usr/local/bin/whispa
-Icon=audio-input-microphone
-Type=Application
-Categories=Utility;AudioVideo;
-Keywords=voice;recording;transcription;whispa;
-Terminal=false 
