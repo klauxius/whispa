@@ -64,6 +64,11 @@ echo "Installing Whispa..."
 # Create the executable script
 cat > /tmp/whispa << EOF
 #!/bin/bash
+# Ensure X11 display access for GUI and keyboard listener
+export DISPLAY=:0
+export XAUTHORITY=\$HOME/.Xauthority
+
+# Activate virtual environment and run program
 source "$VENV_DIR/bin/activate"
 python3 "$CONFIG_DIR/whispa.py"
 EOF
