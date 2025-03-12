@@ -114,6 +114,19 @@ class WhispaGUI:
         self.language_menu = ttk.Combobox(lang_frame, textvariable=self.language_var, values=list(LANGUAGES.keys()))
         self.language_menu.pack(pady=5, padx=5, fill="x")
         
+        # Options frame
+        options_frame = ttk.LabelFrame(main_frame, text="Options")
+        options_frame.pack(pady=5, fill="x")
+        
+        # Auto-Enter option
+        self.auto_enter_var = tk.BooleanVar(value=self.settings.get('auto_enter', False))
+        self.auto_enter_check = ttk.Checkbutton(
+            options_frame, 
+            text="Press Enter after transcription", 
+            variable=self.auto_enter_var
+        )
+        self.auto_enter_check.pack(pady=5, padx=5, anchor="w")
+        
         # Audio level
         self.level_label = ttk.Label(main_frame, text="Audio Level: 0.0")
         self.level_label.pack(pady=5)
@@ -132,14 +145,16 @@ class WhispaGUI:
                 self.settings = {
                     'device': 9,  # Default to pulse
                     'language_name': "Auto-detect",
-                    'language_code': ""
+                    'language_code': "",
+                    'auto_enter': False
                 }
         except Exception as e:
             print(f"Error loading settings: {str(e)}")
             self.settings = {
                 'device': 9,
                 'language_name': "Auto-detect",
-                'language_code': ""
+                'language_code': "",
+                'auto_enter': False
             }
     
     def save_settings(self):
@@ -153,10 +168,14 @@ class WhispaGUI:
             language_name = self.language_var.get()
             language_code = LANGUAGES.get(language_name, "")
             
+            # Get auto-enter preference
+            auto_enter = self.auto_enter_var.get()
+            
             self.settings = {
                 'device': device_id,
                 'language_name': language_name,
-                'language_code': language_code
+                'language_code': language_code,
+                'auto_enter': auto_enter
             }
             
             os.makedirs(os.path.dirname(self.settings_file), exist_ok=True)
@@ -301,6 +320,13 @@ class WhispaGUI:
             keyboard.press(char)
             keyboard.release(char)
             time.sleep(0.05)
+        
+        # Check if auto-enter is enabled
+        if self.auto_enter_var.get():
+            time.sleep(0.1)  # Small pause before pressing Enter
+            keyboard.press(Key.enter)
+            keyboard.release(Key.enter)
+            print("Auto-pressed Enter key")
 
 def main():
     root = tk.Tk()
